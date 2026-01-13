@@ -5,9 +5,12 @@ import { SelectFoodScreen } from './components/SelectFoodScreen';
 import { SelectAdulterantScreen } from './components/SelectAdulterantScreen';
 import { TestDetailsScreen } from './components/TestDetailsScreen';
 import { FavoritesScreen } from './components/FavoritesScreen';
+import { ReportsMenuScreen } from './components/ReportsMenuScreen';
+import { ReportFormScreen } from './components/ReportFormScreen';
+import { ReportListScreen } from './components/ReportListScreen';
 import { AppScreen, FoodItem, Adulterant, TestProcedure, FavoriteItem } from './types';
 import { APP_LOGO } from './constants';
-import { School, FlaskConical, ArrowRight, Heart } from 'lucide-react';
+import { School, FlaskConical, ArrowRight, Heart, FileText } from 'lucide-react';
 
 const App: React.FC = () => {
   // State
@@ -56,6 +59,13 @@ const App: React.FC = () => {
       case AppScreen.FAVORITES:
         setCurrentScreen(AppScreen.HOME);
         break;
+      case AppScreen.REPORTS_MENU:
+        setCurrentScreen(AppScreen.HOME);
+        break;
+      case AppScreen.REPORT_FORM:
+      case AppScreen.REPORT_LIST:
+        setCurrentScreen(AppScreen.REPORTS_MENU);
+        break;
       default:
         setCurrentScreen(AppScreen.HOME);
     }
@@ -63,6 +73,7 @@ const App: React.FC = () => {
 
   const handleStart = () => setCurrentScreen(AppScreen.SELECT_FOOD);
   const handleGoToFavorites = () => setCurrentScreen(AppScreen.FAVORITES);
+  const handleGoToReports = () => setCurrentScreen(AppScreen.REPORTS_MENU);
 
   const handleFoodSelect = (food: FoodItem) => {
     setSelectedFood(food);
@@ -160,11 +171,19 @@ const App: React.FC = () => {
           </span>
         </Button>
         
-        <Button onClick={handleGoToFavorites} fullWidth variant="secondary" className="text-lg py-4 shadow-lg shadow-sky-500/10 group bg-white border border-slate-100 !bg-none !text-slate-600 hover:!bg-slate-50 hover:!text-primary-600">
-          <span className="flex items-center justify-center gap-2">
-            <Heart size={20} className="group-hover:text-red-500 transition-colors" /> Favorites
-          </span>
-        </Button>
+        <div className="grid grid-cols-2 gap-3">
+          <Button onClick={handleGoToFavorites} fullWidth variant="secondary" className="text-sm py-4 shadow-lg shadow-sky-500/10 group bg-white border border-slate-100 !bg-none !text-slate-600 hover:!bg-slate-50 hover:!text-primary-600">
+            <span className="flex items-center justify-center gap-2">
+              <Heart size={18} className="group-hover:text-red-500 transition-colors" /> Favorites
+            </span>
+          </Button>
+
+          <Button onClick={handleGoToReports} fullWidth variant="secondary" className="text-sm py-4 shadow-lg shadow-sky-500/10 group bg-white border border-slate-100 !bg-none !text-slate-600 hover:!bg-slate-50 hover:!text-primary-600">
+            <span className="flex items-center justify-center gap-2">
+              <FileText size={18} className="group-hover:text-blue-500 transition-colors" /> My Reports
+            </span>
+          </Button>
+        </div>
       </div>
     </div>
   );
@@ -208,6 +227,23 @@ const App: React.FC = () => {
             isFavorite={isCurrentFavorite()}
             onToggleFavorite={toggleFavorite}
           />
+        )}
+
+        {currentScreen === AppScreen.REPORTS_MENU && (
+          <ReportsMenuScreen 
+            onNavigateToForm={() => setCurrentScreen(AppScreen.REPORT_FORM)}
+            onNavigateToList={() => setCurrentScreen(AppScreen.REPORT_LIST)}
+          />
+        )}
+
+        {currentScreen === AppScreen.REPORT_FORM && (
+          <ReportFormScreen 
+            onSubmitSuccess={() => setCurrentScreen(AppScreen.REPORT_LIST)}
+          />
+        )}
+
+        {currentScreen === AppScreen.REPORT_LIST && (
+          <ReportListScreen />
         )}
       </main>
       

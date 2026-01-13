@@ -11,7 +11,7 @@ export const ReportsMenuScreen: React.FC<ReportsMenuScreenProps> = ({ onNavigate
   return (
     <div className="px-4 py-8 max-w-2xl mx-auto animate-slide-up flex flex-col items-center">
       <h2 className="text-3xl font-bold text-slate-800 mb-3">Adulteration Reports</h2>
-      <p className="text-slate-500 mb-10 text-center max-w-sm">Submit your own findings or view reports from the community.</p>
+      <p className="text-slate-500 mb-10 text-center max-w-sm">Document your findings or view your saved local reports.</p>
 
       <div className="w-full space-y-6 max-w-md">
         <button
@@ -40,7 +40,7 @@ export const ReportsMenuScreen: React.FC<ReportsMenuScreenProps> = ({ onNavigate
             </div>
             <div className="text-left">
               <h3 className="font-bold text-xl text-slate-800 mb-1">See Reports</h3>
-              <p className="text-blue-600/80 text-sm font-medium">View community findings</p>
+              <p className="text-blue-600/80 text-sm font-medium">View saved findings</p>
             </div>
           </div>
           <ChevronRight className="text-blue-200 group-hover:text-blue-400 group-hover:translate-x-1 transition-all" />
